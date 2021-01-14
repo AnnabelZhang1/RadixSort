@@ -23,17 +23,19 @@ public class Radix{
   public static void radixSortSimple(SortableLinkedList data){
     SortableLinkedList[] buckets = new SortableLinkedList[10];
     int len = 1;
+    for (int i = 0; i < 10; i++)
+      buckets[i] = new SortableLinkedList();
+
     for (int i = 0; i < len; i++){
-      for (int j = 0; j < data.size(); j++){
-        int current = data.get(j);
+      while (data.size() > 0){
+        int current = data.remove(0);
         if (i == 0 && length(current) > len) //filing by digits
           len = length(current);
         int place = nth(current, i);
-        if (buckets[place] == null)
-          buckets[place] = new SortableLinkedList();
-        buckets[place].add(current); //adds number to bucket
-        data.remove(j); //deletes original one by one
-        j--;
+        if (current < 0)
+          buckets[9 - place].add(current);
+        else
+          buckets[place].add(current);
       }
       merge(data, buckets);
     }
@@ -43,12 +45,11 @@ public class Radix{
     SortableLinkedList positives = new SortableLinkedList();
     SortableLinkedList negatives = new SortableLinkedList();
     while (data.size() > 0){
-      int current = data.get(0);
+      int current = data.remove(0);
       if (current >= 0)
         positives.add(current);
       else
         negatives.add(current);
-      data.remove(0);
     }
     radixSortSimple(positives);
     radixSortSimple(negatives);
@@ -68,14 +69,5 @@ public class Radix{
     System.out.println(length(15)); //2
     System.out.println(length(-10)); //2
     System.out.println(length(5112)); //4
-
-    System.out.println();
-/*
-    SortableLinkedList a = new SortableLinkedList();
-    MyLinkedList b = new MyLinkedList();
-    for (int i = 0; i < 5; i++)
-      a.add(i);
-    radixSortSimple(a);
-    System.out.println(a);*/
   }
 }
