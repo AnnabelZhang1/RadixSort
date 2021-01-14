@@ -12,13 +12,15 @@ public class Radix{
     else
       return 1;
   }
-/*
+
   public static void merge(MyLinkedList original, MyLinkedList[]buckets){
-
+    for (int i = 0; i < buckets.length; i++){
+      if (buckets[i] != null)
+        original.extend(buckets[i]);
+    }
   }
-
   //public static void merge(SortableLinkedList original, SortableLinkedList[]buckets)
-*/
+
   public static void main(String[] args){
     System.out.println(nth(123, 1)); //2
     System.out.println(nth(-123, 1)); //2
@@ -31,5 +33,16 @@ public class Radix{
     System.out.println(length(15)); //2
     System.out.println(length(-10)); //2
     System.out.println(length(5112)); //4
+
+    System.out.println();
+
+    MyLinkedList a = new MyLinkedList();
+    MyLinkedList b = new MyLinkedList();
+    for (int i = 0; i < 5; i++)
+      a.add(i+"");
+    for (int i = 5; i < 10; i++)
+      b.add(i+"");
+/*    merge(a, b);
+    System.out.println(a);*/
   }
 }
