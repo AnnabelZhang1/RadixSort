@@ -1,8 +1,8 @@
 public class Radix{
 
   public static int nth(int n, int col){
-    int numplace = (int)Math.pow(10, col + 1);
-    return Math.abs((n%numplace)/(numplace/10));
+    int numplace = (int)Math.pow(10, col);
+    return (Math.abs(n/numplace))%10;
   }
 
   public static int length(int n){
