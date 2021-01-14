@@ -13,14 +13,36 @@ public class Radix{
       return 1;
   }
 
-  public static void merge(MyLinkedList original, MyLinkedList[]buckets){
+  public static void merge(SortableLinkedList original, SortableLinkedList[]buckets){
     for (int i = 0; i < buckets.length; i++){
       if (buckets[i] != null)
         original.extend(buckets[i]);
     }
   }
-  //public static void merge(SortableLinkedList original, SortableLinkedList[]buckets)
 
+  public static void radixSortSimple(SortableLinkedList data){
+    SortableLinkedList[] buckets = new SortableLinkedList[10];
+    int len = 1;
+    for (int i = 0; i < len; i++){
+      for (int j = 0; j < data.size(); j++){
+        int current = data.get(j);
+        if (i == 0 && length(current) > len) //filing by digits
+          len = length(current);
+        int place = nth(current, i);
+        if (buckets[place] == null)
+          buckets[place] = new SortableLinkedList();
+        buckets[place].add(current); //adds number to bucket
+        data.remove(j); //deletes original one by one
+        j--;
+      }
+      merge(data, buckets);
+    }
+  }
+/*
+  public static void radixSort(SortableLinkedList data){
+
+  }
+*/
   public static void main(String[] args){
     System.out.println(nth(123, 1)); //2
     System.out.println(nth(-123, 1)); //2
@@ -36,13 +58,11 @@ public class Radix{
 
     System.out.println();
 
-    MyLinkedList a = new MyLinkedList();
+    SortableLinkedList a = new SortableLinkedList();
     MyLinkedList b = new MyLinkedList();
     for (int i = 0; i < 5; i++)
-      a.add(i+"");
-    for (int i = 5; i < 10; i++)
-      b.add(i+"");
-/*    merge(a, b);
-    System.out.println(a);*/
+      a.add(i);
+    radixSortSimple(a);
+    System.out.println(a);
   }
 }
